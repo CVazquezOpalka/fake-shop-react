@@ -25,5 +25,4 @@ const Container = styled.div`
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
   row-gap: 40px;
-
 `;

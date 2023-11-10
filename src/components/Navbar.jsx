@@ -28,7 +28,7 @@ export const Navbar = () => {
 const Container = styled.div`
   width: 100vw;
   height: 90px;
-  background-color: yellow;
+  background-color: #e3dc0a;
   position: relative;
   .nav_container {
     width: 1250px;
