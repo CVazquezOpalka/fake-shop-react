@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LogoShop from "../assets/logo.png";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export const Navbar = () => {
   return (
@@ -11,13 +12,16 @@ export const Navbar = () => {
         </Logo>
         <Nav>
           <ul>
-            <li>Categorias
+            <li>
+              Categorias
               <div className="float"></div>
             </li>
             <li>Creá tu Cuenta</li>
             <li>Ingresá</li>
             <li>Mis compras</li>
-            <li>Carrito</li>
+            <li>
+              <AiOutlineShoppingCart></AiOutlineShoppingCart>
+            </li>
           </ul>
         </Nav>
       </div>
@@ -75,15 +79,17 @@ const Nav = styled.nav`
       &:hover {
         opacity: 1;
       }
-      .float{
+      svg{
+        font-size: 25px;
+      }
+      .float {
         position: absolute;
-        top:40px;
-        left:-30px ;
+        top: 40px;
+        left: -30px;
         background: red;
         width: 150px;
         transition: heigth 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
       }
     }
-    
   }
 `;

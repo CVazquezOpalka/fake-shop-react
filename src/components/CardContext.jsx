@@ -2,17 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { Card } from "./Card";
 
-export const CardContext = () => {
-  return <Container>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-  </Container>;
+export const CardContext = ({ list, loading }) => {
+  if (loading) {
+    return <h1>Cargandoo</h1>;
+  } else
+    return (
+      <Container>
+        {list && list.map((e) => (
+          <Card key={e.id} product={e}></Card>
+        ))}
+      </Container>
+    );
 };
 
 const Container = styled.div`

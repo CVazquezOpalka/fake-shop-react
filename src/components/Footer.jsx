@@ -12,7 +12,8 @@ export const Footer = () => {
           <ul>
             <li>Mi cuenta</li>
             <li>Sobre el proyecto</li>
-            <li>Ver mas</li>
+            <li>Ver mas Proyectos</li>
+            <li>Contacto</li>
           </ul>
         </div>
         <div className="social">

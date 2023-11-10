@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CardContext } from "../components/CardContext";
+import { Paginacion } from "../components/Paginacion";
 
 export default function Home() {
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const onScroll = () => window.scroll(0, 0);
+
+  const fetchProducts = async () => {
+    const URL = "https://fakestoreapi.com/products";
+    try {
+      setLoading(true);
+      const response = await fetch(URL);
+      const data = await response.json();
+      setProduct(data);
+      setLoading(false);
+    } catch (error) {}
+  };
+
+  const itemPerPage = 4;
+  const totalPages = Math.ceil(product.length / itemPerPage);
+  const pagination = () => {
+    const starIndex = (page - 1) * itemPerPage;
+    const endIndex = starIndex + itemPerPage;
+    if (product.length) return product.slice(starIndex, endIndex);
+  };
+  const onPrevPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+  const onNextPage = () => {
+    if (page < totalPages) {
+      setPage((nextPage) => nextPage + 1);
+    }
+  };
+
+  let productPages = pagination();
+
+  useEffect(() => {
+    fetchProducts();
+    onScroll();
+  }, [page]);
   return (
     <Container>
       <Navbar>
@@ -14,7 +56,13 @@ export default function Home() {
           <li>Ropa para mujer</li>
         </ul>
       </Navbar>
-      <CardContext></CardContext>
+      <CardContext loading={loading} list={productPages}></CardContext>
+      <Paginacion
+        page={page}
+        totalPage={totalPages}
+        next={onNextPage}
+        prev={onPrevPage}
+      ></Paginacion>
     </Container>
   );
 }

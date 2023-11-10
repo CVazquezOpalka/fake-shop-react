@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const Card = ({ props }) => {
+export const Card = ({ product }) => {
   return (
     <Container>
       <Link>
         <div className="imgbox">
           <img
-            src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-            alt="foto de algo"
+            src={product.image}
+            alt={product.title}
           />
         </div>
         <div className="content">
           <span className="ball">oferta del día</span>
           <span className="precio">$9518</span>
           <h2>
-            $8519 <span>10% OFF</span>
+            ${product.price} <span>10% OFF</span>
           </h2>
           <p className="cuota">Mismo precio en 6 cuotas de $2719</p>
           <p className="envio">
@@ -26,7 +26,7 @@ export const Card = ({ props }) => {
               <i>Full</i>
             </span>
           </p>
-          <p className="producto">Bolso de mano</p>
+          <p className="producto">{product.title.slice(0,26)}</p>
         </div>
       </Link>
     </Container>
@@ -63,7 +63,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 5px;
+    gap: 3px;
     .ball {
       padding: 2px 4px;
       background: #3483fa;
