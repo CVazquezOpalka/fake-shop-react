@@ -5,12 +5,9 @@ import { Link } from "react-router-dom";
 export const Card = ({ product }) => {
   return (
     <Container>
-      <Link>
+      <Link to={`/product/${product.id}`}>
         <div className="imgbox">
-          <img
-            src={product.image}
-            alt={product.title}
-          />
+          <img src={product.image} alt={product.title} />
         </div>
         <div className="content">
           <span className="ball">oferta del día</span>
@@ -26,7 +23,7 @@ export const Card = ({ product }) => {
               <i>Full</i>
             </span>
           </p>
-          <p className="producto">{product.title.slice(0,26)}</p>
+          <p className="producto">{product.title.slice(0, 26)}</p>
         </div>
       </Link>
     </Container>

@@ -7,9 +7,14 @@ export default function Home() {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-
-  const onScroll = () => window.scroll(0, 0);
-
+  /* Scroll al inicio */
+  const onScroll = () =>
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  /* funcion para traer productos */
   const fetchProducts = async () => {
     const URL = "https://fakestoreapi.com/products";
     try {
@@ -20,7 +25,7 @@ export default function Home() {
       setLoading(false);
     } catch (error) {}
   };
-
+  /* funcion de paginacion */
   const itemPerPage = 4;
   const totalPages = Math.ceil(product.length / itemPerPage);
   const pagination = () => {
@@ -40,7 +45,7 @@ export default function Home() {
   };
 
   let productPages = pagination();
-
+  /* useEffect */
   useEffect(() => {
     fetchProducts();
     onScroll();
@@ -56,13 +61,19 @@ export default function Home() {
           <li>Ropa para mujer</li>
         </ul>
       </Navbar>
-      <CardContext loading={loading} list={productPages}></CardContext>
-      <Paginacion
-        page={page}
-        totalPage={totalPages}
-        next={onNextPage}
-        prev={onPrevPage}
-      ></Paginacion>
+      {loading ? (
+        <h1>Cargandoo</h1>
+      ) : (
+        <>
+          <CardContext loading={loading} list={productPages}></CardContext>
+          <Paginacion
+            page={page}
+            totalPage={totalPages}
+            next={onNextPage}
+            prev={onPrevPage}
+          ></Paginacion>
+        </>
+      )}
     </Container>
   );
 }

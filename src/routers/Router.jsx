@@ -15,10 +15,10 @@ return (
     
         <Routes>
           <Route path='/' element={<Home></Home>}/>
-          <Route path='/' element={<Detail></Detail>}/>
-          <Route path='/' element={<Checkout></Checkout>}/>
-          <Route path='/' element={<Signin></Signin>}/>
-          <Route path='/' element={<Signup></Signup>}/>
+          <Route path='/product/:id' element={<Detail></Detail>}/>
+          <Route path='/checkout' element={<Checkout></Checkout>}/>
+          <Route path='/signin' element={<Signin></Signin>}/>
+          <Route path='/signup' element={<Signup></Signup>}/>
         </Routes>
       
     );

@@ -3,16 +3,11 @@ import styled from "styled-components";
 import { Card } from "./Card";
 
 export const CardContext = ({ list, loading }) => {
-  if (loading) {
-    return <h1>Cargandoo</h1>;
-  } else
-    return (
-      <Container>
-        {list && list.map((e) => (
-          <Card key={e.id} product={e}></Card>
-        ))}
-      </Container>
-    );
+  return (
+    <Container>
+      {list && list.map((e) => <Card key={e.id} product={e}></Card>)}
+    </Container>
+  );
 };
 
 const Container = styled.div`
