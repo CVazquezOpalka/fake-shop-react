@@ -15,7 +15,10 @@ export const Card = ({ product }) => {
           <h2>
             ${product.price} <span>10% OFF</span>
           </h2>
-          <p className="cuota">Mismo precio en 6 cuotas de $2719</p>
+          <p className="cuota">
+            Mismo precio en 6 cuotas de{" "}
+            {(product.price / 6).toString().slice(0, 5)}
+          </p>
           <p className="envio">
             Envio gratis{" "}
             <span>

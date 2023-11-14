@@ -4,11 +4,25 @@ import { AiOutlineHeart, AiTwotoneThunderbolt } from "react-icons/ai";
 import { TbReload } from "react-icons/tb";
 import { BsShieldCheck, BsTrophy } from "react-icons/bs";
 import { useParams } from "react-router-dom";
+import Swiper from "../components/Swiper";
 
 function Detail() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  /* Funcion para el swiper */
+  const fetchAllProducts = async () => {
+    const URL = "https://fakestoreapi.com/products";
+    try {
+      setIsLoading(true);
+      const response = await fetch(URL);
+      const data = await response.json();
+      setCategories(data);
+      setIsLoading(false);
+    } catch (error) {}
+  };
   /* funcion para traer un producto */
   const fetchProduct = async () => {
     const URL = `https://fakestoreapi.com/products/${id}`;
@@ -22,6 +36,12 @@ function Detail() {
       console.log(error);
     }
   };
+  const categoryItems = () => {
+    const categoriesItems = product.category;
+    return categories.filter((e) => e.category === categoriesItems);
+  };
+  const swiperMostrador = categoryItems();
+
   /* funcion de oferta */
   const reducePrice = () => {
     return parseFloat(product.price - product.price * 0.1)
@@ -34,7 +54,6 @@ function Detail() {
     let mes = fechaActual.toString().split(" ")[1];
     let fechaEntrega = Number(fechaActual.toString().split(" ")[2]) + 7;
     let diasAdicionales = Number(fechaActual.toString().split(" ")[2]) + 12;
-    console.log(mes);
     return `entre el ${fechaEntrega} y ${diasAdicionales} ${mes} `;
   }
   /* scroll al inicio */
@@ -47,7 +66,8 @@ function Detail() {
   /* useEffect  */
   useEffect(() => {
     fetchProduct();
-    /*  onScroll(); */
+    onScroll();
+    fetchAllProducts();
   }, [id]);
   /* Condicional de carga */
   if (isLoading) {
@@ -162,7 +182,9 @@ function Detail() {
         <ProductosSimilares>
           <div className="box-content">
             <h1 className="title-content">Productos relacionados</h1>
-            <div className="slider-content">aca va un card slider</div>
+            <div className="slider-content">
+              <Swiper category={swiperMostrador} />
+            </div>
           </div>
         </ProductosSimilares>
       </>
@@ -207,7 +229,7 @@ const Container = styled.main`
     gap: 10px;
     .slider .image .content .cart {
       width: 100%;
-      height: 100%;
+      height: auto;
     }
     .slider {
       margin: 10px 0;
@@ -469,10 +491,10 @@ const ProductosSimilares = styled.div`
   padding: 30px 0px;
   background-color: rgba(0, 0, 0, 0.1);
   width: 100%;
-  height: 450px;
+  height: 550px;
   .box-content {
     width: 1200px;
-    height: 90%;
+    height: 100%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -480,6 +502,10 @@ const ProductosSimilares = styled.div`
     .title-content {
       font-size: 22px;
       font-weight: normal;
+    }
+    .slider-content {
+      width: 100%;
+      height: 450px;
     }
   }
 `;
