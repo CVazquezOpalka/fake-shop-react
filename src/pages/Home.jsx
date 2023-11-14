@@ -26,7 +26,7 @@ export default function Home() {
     } catch (error) {}
   };
   /* funcion de paginacion */
-  const itemPerPage = 4;
+  const itemPerPage = 8;
   const totalPages = Math.ceil(product.length / itemPerPage);
   const pagination = () => {
     const starIndex = (page - 1) * itemPerPage;

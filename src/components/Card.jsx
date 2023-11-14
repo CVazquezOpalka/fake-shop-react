@@ -3,6 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Card = ({ product }) => {
+  const reducePrice = () => {
+    return parseFloat(product.price - product.price * 0.1)
+      .toString()
+      .slice(0, 6);
+  };
   return (
     <Container>
       <Link to={`/product/${product.id}`}>
@@ -11,9 +16,9 @@ export const Card = ({ product }) => {
         </div>
         <div className="content">
           <span className="ball">oferta del día</span>
-          <span className="precio">$9518</span>
+          <span className="precio">${product.price}</span>
           <h2>
-            ${product.price} <span>10% OFF</span>
+            ${reducePrice()} <span>10% OFF</span>
           </h2>
           <p className="cuota">
             Mismo precio en 6 cuotas de{" "}

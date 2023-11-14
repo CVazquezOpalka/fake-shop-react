@@ -9,7 +9,11 @@ export const Paginacion = ({ page, totalPage, prev, next }) => {
         <button onClick={prev}>
           <AiOutlineLeft></AiOutlineLeft> anterior
         </button>
-      ) : null}
+      ) : (
+        <button className="opacity" onClick={next}>
+          siguiente<AiOutlineRight></AiOutlineRight>
+        </button>
+      )}
       <h4>
         <span className="cuadrado">{page}</span> de <span>{totalPage}</span>
       </h4>
@@ -17,7 +21,11 @@ export const Paginacion = ({ page, totalPage, prev, next }) => {
         <button onClick={next}>
           siguiente<AiOutlineRight></AiOutlineRight>
         </button>
-      ) : null}
+      ) : (
+        <button className="opacity" onClick={next}>
+          siguiente<AiOutlineRight></AiOutlineRight>
+        </button>
+      )}
     </Container>
   );
 };
@@ -29,8 +37,8 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-  .danger {
-    opacity: 0.5;
+  .opacity {
+    visibility: hidden;
   }
   button {
     display: flex;
@@ -39,6 +47,7 @@ const Container = styled.div`
     gap: 4px;
     padding: 2px 4px;
     border: none;
+    background: none;
     color: #111;
     text-align: center;
     font-size: 16px;

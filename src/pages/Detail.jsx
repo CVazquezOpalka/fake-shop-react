@@ -341,7 +341,7 @@ const Container = styled.main`
       }
       .overviews {
         width: 100%;
-        height: 200px;
+        height: auto;
         margin-top: 5px;
         h2 {
           display: block;
@@ -414,9 +414,10 @@ const Container = styled.main`
         width: 95%;
         height: 150px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
+        gap: 20px;
         button {
           width: 100%;
           height: 40px;
@@ -467,6 +468,7 @@ const Container = styled.main`
               font-weight: 400;
               text-align: justify;
               color: rgba(0, 0, 0, 0.65);
+              text-align: justify;
             }
           }
         }
