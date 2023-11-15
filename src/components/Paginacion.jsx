@@ -23,7 +23,7 @@ export const Paginacion = ({ page, totalPage, prev, next }) => {
         </button>
       ) : (
         <button className="opacity" onClick={next}>
-          siguiente<AiOutlineRight></AiOutlineRight>
+          siguiente <AiOutlineRight></AiOutlineRight>
         </button>
       )}
     </Container>
@@ -53,7 +53,7 @@ const Container = styled.div`
     font-size: 16px;
     color: #3483fa;
     font-weight: 400;
-    opacity: 0.5;
+    opacity: 0.8;
     transition: all 0.2s ease;
     cursor: pointer;
     &:hover {

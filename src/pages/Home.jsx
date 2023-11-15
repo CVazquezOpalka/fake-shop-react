@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { CardContext } from "../components/CardContext";
 import { Paginacion } from "../components/Paginacion";
+import { fetchProducts, filterProduct } from "../redux/actions/product.actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product.products);
+  const loading = useSelector((state) => state.product.isLoading);
+  const filter = useSelector((state) => state.product.filterProducts);
   const [page, setPage] = useState(1);
   /* Scroll al inicio */
   const onScroll = () =>
@@ -14,24 +19,15 @@ export default function Home() {
       left: 0,
       behavior: "smooth",
     });
-  /* funcion para traer productos */
-  const fetchProducts = async () => {
-    const URL = "https://fakestoreapi.com/products";
-    try {
-      setLoading(true);
-      const response = await fetch(URL);
-      const data = await response.json();
-      setProduct(data);
-      setLoading(false);
-    } catch (error) {}
-  };
   /* funcion de paginacion */
   const itemPerPage = 8;
-  const totalPages = Math.ceil(product.length / itemPerPage);
-  const pagination = () => {
+  const totalPages = filter.length
+    ? Math.ceil(filter.length / itemPerPage)
+    : Math.ceil(product.length / itemPerPage);
+  const pagination = (array) => {
     const starIndex = (page - 1) * itemPerPage;
     const endIndex = starIndex + itemPerPage;
-    if (product.length) return product.slice(starIndex, endIndex);
+    if (array.length) return array.slice(starIndex, endIndex);
   };
   const onPrevPage = () => {
     if (page > 1) {
@@ -44,21 +40,58 @@ export default function Home() {
     }
   };
 
-  let productPages = pagination();
+  let productPages = filter.length ? pagination(filter) : pagination(product);
   /* useEffect */
   useEffect(() => {
+    dispatch(fetchProducts());
     fetchProducts();
     onScroll();
   }, [page]);
+
   return (
     <Container>
       <Navbar>
         <ul>
-          <li>Todos los productos</li>
-          <li>Electronicos</li>
-          <li>Joyeria</li>
-          <li>Ropa para Hombres</li>
-          <li>Ropa para mujer</li>
+          <li
+            onClick={() => {
+              dispatch(filterProduct(""));
+              setPage(1);
+            }}
+          >
+            <NavLink>Todos los productos</NavLink>
+          </li>
+          <li
+            onClick={() => {
+              dispatch(filterProduct("electronics"));
+              setPage(1);
+            }}
+          >
+            <NavLink>Electronicos</NavLink>
+          </li>
+          <li
+            onClick={() => {
+              dispatch(filterProduct("jewelery"));
+              setPage(1);
+            }}
+          >
+            <NavLink>Joyeria</NavLink>
+          </li>
+          <li
+            onClick={() => {
+              dispatch(filterProduct("men's clothing"));
+              setPage(1);
+            }}
+          >
+            <NavLink>Ropa para Hombres</NavLink>
+          </li>
+          <li
+            onClick={() => {
+              dispatch(filterProduct("women's clothing"));
+              setPage(1);
+            }}
+          >
+            <NavLink>Ropa para mujer</NavLink>
+          </li>
         </ul>
       </Navbar>
       {loading ? (
@@ -102,7 +135,7 @@ const Navbar = styled.div`
     li {
       position: relative;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 1px;

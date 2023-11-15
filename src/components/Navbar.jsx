@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LogoShop from "../assets/logo.png";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   return (
@@ -13,14 +14,26 @@ export const Navbar = () => {
         <Nav>
           <ul>
             <li>
-              Categorias
-              <div className="float"></div>
+              <NavLink
+                className={({ isActive }) => (isActive ? "active" : "")}
+                to="/"
+              >
+                Categorias
+              </NavLink>
             </li>
-            <li>Creá tu Cuenta</li>
-            <li>Ingresá</li>
-            <li>Mis compras</li>
             <li>
-              <AiOutlineShoppingCart></AiOutlineShoppingCart>
+              <NavLink className={({ isActive }) => (isActive ? "active" : "")} to="/signin">Registrarse</NavLink>
+            </li>
+            <li>
+              <NavLink className={({ isActive }) => (isActive ? "active" : "")} to="/signup">Ingresá</NavLink>
+            </li>
+            {/* <li>
+              <NavLink className={({ isActive }) => (isActive ? "active" : "")}>Mis compras</NavLink>
+            </li> */}
+            <li>
+              <NavLink to="/checkout" className={({ isActive }) => (isActive ? "active" : "")}>
+                <AiOutlineShoppingCart></AiOutlineShoppingCart>
+              </NavLink>
             </li>
           </ul>
         </Nav>
@@ -69,17 +82,19 @@ const Nav = styled.nav`
     justify-content: space-around;
     list-style: none;
     li {
-      position: relative;
-      padding: 5px 10px;
-      color: #111;
-      font-weight: 500;
-      opacity: 0.6;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      &:hover {
+      a {
+        position: relative;
+        padding: 5px 10px;
+        color: #111;
+        font-weight: 500;
+        opacity: 0.6;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .active {
         opacity: 1;
       }
-      svg{
+      svg {
         font-size: 25px;
       }
       .float {
