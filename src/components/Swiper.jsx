@@ -1,15 +1,30 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-import styled from "styled-components";
-import { Card } from "./Card";
+import { Navigation, Scrollbar, A11y } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+/* Styles */
+import styled from "styled-components";
+/* Componentes */
+import { Card } from "./Card";
+/* Hooks */
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+/* Function para filtrar el swiper */
+import { swiperProduct } from "../redux/actions/product.actions";
 
 export default ({ category }) => {
-  console.log(category);
+  /* Estados de Redux */
+  const swiper = useSelector((state) => state.product.swiper);
+  const loading = useSelector((state) => state.product.swiperLoading);
+  /* Hooks */
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(swiperProduct(category));
+  }, [category]);
+  /* Render */
   return (
     <Container>
       <Swiper
@@ -22,11 +37,13 @@ export default ({ category }) => {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log("slide change")}
       >
-        {category.map((e) => (
-          <SwiperSlide key={e.id}>
-            <Card product={e} />
-          </SwiperSlide>
-        ))}
+        {!loading
+          ? swiper.map((e) => (
+              <SwiperSlide key={e.id}>
+                <Card product={e} />
+              </SwiperSlide>
+            ))
+          : null}
       </Swiper>
     </Container>
   );

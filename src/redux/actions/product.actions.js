@@ -3,6 +3,8 @@ import {
   FETCH_PRODUCTS,
   REQUEST,
   FILTER_PRODUCT,
+  UPDATE_DETAIL,
+  SWIPER_PRODUCT,
 } from "../type/product.type.actions";
 import axios from "axios";
 
@@ -43,3 +45,12 @@ export const filterProduct = (data) => (dispatch) => {
     payload: data,
   });
 };
+
+export const updateDetail = () => ({
+  type: UPDATE_DETAIL,
+});
+
+export const swiperProduct = (data) => ({
+  type: SWIPER_PRODUCT,
+  payload: data,
+});

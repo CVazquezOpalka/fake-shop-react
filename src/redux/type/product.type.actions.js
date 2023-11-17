@@ -2,3 +2,5 @@ export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const FETCH_PRODUCT = "FETCH_PRODUCT";
 export const REQUEST = "REQUEST";
 export const FILTER_PRODUCT = "FILTER_PRODUCT"
+export const UPDATE_DETAIL = "UPDATE_DETAIL"
+export const SWIPER_PRODUCT = "SWIPER_PRODUCT"

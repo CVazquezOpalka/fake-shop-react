@@ -5,42 +5,17 @@ import { TbReload } from "react-icons/tb";
 import { BsShieldCheck, BsTrophy } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import Swiper from "../components/Swiper";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../redux/actions/product.actions";
 
 function Detail() {
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product.product);
+  const isLoading = useSelector((state) => state.product.isLoading);
   const { id } = useParams();
-  const [product, setProduct] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const categoryItem = product.category
+ 
   /* Funcion para el swiper */
-  const fetchAllProducts = async () => {
-    const URL = "https://fakestoreapi.com/products";
-    try {
-      setIsLoading(true);
-      const response = await fetch(URL);
-      const data = await response.json();
-      setCategories(data);
-      setIsLoading(false);
-    } catch (error) {}
-  };
-  /* funcion para traer un producto */
-  const fetchProduct = async () => {
-    const URL = `https://fakestoreapi.com/products/${id}`;
-    try {
-      setIsLoading(true);
-      const response = await fetch(URL);
-      const data = await response.json();
-      setProduct(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const categoryItems = () => {
-    const categoriesItems = product.category;
-    return categories.filter((e) => e.category === categoriesItems);
-  };
-  const swiperMostrador = categoryItems();
 
   /* funcion de oferta */
   const reducePrice = () => {
@@ -65,9 +40,8 @@ function Detail() {
     });
   /* useEffect  */
   useEffect(() => {
-    fetchProduct();
+    dispatch(fetchProduct(id));
     onScroll();
-    fetchAllProducts();
   }, [id]);
   /* Condicional de carga */
   if (isLoading) {
@@ -183,7 +157,7 @@ function Detail() {
           <div className="box-content">
             <h1 className="title-content">Productos relacionados</h1>
             <div className="slider-content">
-              <Swiper category={swiperMostrador} />
+              <Swiper category={categoryItem}/>
             </div>
           </div>
         </ProductosSimilares>

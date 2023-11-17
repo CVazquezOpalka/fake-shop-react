@@ -3,13 +3,17 @@ import {
   FETCH_PRODUCTS,
   FILTER_PRODUCT,
   REQUEST,
+  UPDATE_DETAIL,
+  SWIPER_PRODUCT,
 } from "../type/product.type.actions";
 
 const initialState = {
   products: [],
   filterProducts: [],
+  swiper: [],
   product: {},
   isLoading: false,
+  swiperLoading: true,
 };
 
 export const productReducer = (state = initialState, { type, payload }) => {
@@ -25,11 +29,23 @@ export const productReducer = (state = initialState, { type, payload }) => {
         products: payload,
         isLoading: false,
       };
+    case SWIPER_PRODUCT:
+      const swiperState = state.products.filter((e) => e.category === payload);
+      return {
+        ...state,
+        swiper: swiperState,
+        swiperLoading: false,
+      };
     case FETCH_PRODUCT:
       return {
         ...state,
         product: payload,
         isLoading: false,
+      };
+    case UPDATE_DETAIL:
+      return {
+        ...state,
+        product: {},
       };
     case FILTER_PRODUCT:
       if (payload.trim() !== "") {

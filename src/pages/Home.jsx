@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { CardContext } from "../components/CardContext";
 import { Paginacion } from "../components/Paginacion";
-import { fetchProducts, filterProduct } from "../redux/actions/product.actions";
+import {filterProduct } from "../redux/actions/product.actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
@@ -43,8 +43,7 @@ export default function Home() {
   let productPages = filter.length ? pagination(filter) : pagination(product);
   /* useEffect */
   useEffect(() => {
-    dispatch(fetchProducts());
-    fetchProducts();
+  
     onScroll();
   }, [page]);
 
